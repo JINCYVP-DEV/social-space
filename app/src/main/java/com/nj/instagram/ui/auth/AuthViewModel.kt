@@ -41,13 +41,17 @@ class AuthViewModel @Inject constructor(
     fun signUp(email: String, password: String, username: String) {
         viewModelScope.launch {
             _uiState.value = AuthUiState.Loading
-            val result = authRepository.signUp(email, password, username)
+            val result = authRepository.signUp(email=email, password = password, userName =  username)
             _uiState.value = if (result.isSuccess) {
                 AuthUiState.Success
             } else {
                 AuthUiState.Error(result.exceptionOrNull()?.message ?: "Unknown error")
             }
         }
+    }
+    fun validateEmail(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+
     }
     fun logout() = viewModelScope.launch {
         authRepository.logout()

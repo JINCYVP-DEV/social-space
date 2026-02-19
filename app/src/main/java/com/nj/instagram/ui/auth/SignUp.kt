@@ -101,7 +101,8 @@ fun SignUp(viewModel: AuthViewModel = hiltViewModel(),onNavigation:(SignUpNaviga
             onValueChange = {
                 username=it
             },
-            label = {Text(stringResource(R.string.text_user_name), style = MaterialTheme.typography.Medium14)},
+            label = {Text(stringResource(R.string.text_user_name),
+            style = MaterialTheme.typography.Medium14)},
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
             textStyle = MaterialTheme.typography.Medium14,
@@ -119,7 +120,8 @@ fun SignUp(viewModel: AuthViewModel = hiltViewModel(),onNavigation:(SignUpNaviga
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
-            label = { Text(stringResource(R.string.text_email), style = MaterialTheme.typography.Medium14) },
+            label = { Text(stringResource(R.string.text_email),
+            style = MaterialTheme.typography.Medium14) },
             isError = showEmailError,
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
@@ -168,13 +170,13 @@ fun SignUp(viewModel: AuthViewModel = hiltViewModel(),onNavigation:(SignUpNaviga
         Button(
             onClick = {
                 // Validate email on submit
-                if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                if (!viewModel.validateEmail(email.trim())) {
                     showEmailError = true
                     return@Button
                 } else {
                     showEmailError = false
+                    viewModel.signUp(email=email.trim(), password =  password.trim(), username =  username.trim())
                 }
-                viewModel.signUp(email, password, username)
             },
             modifier = Modifier.fillMaxWidth(),
             enabled = username.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && uiState !is AuthUiState.Loading,

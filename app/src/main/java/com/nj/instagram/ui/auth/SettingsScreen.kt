@@ -56,7 +56,7 @@ fun SettingsScreen(authViewModel: AuthViewModel= hiltViewModel(),onNavigation:(S
     }
 
         // ✅ Dynamic Settings List
-        val settingsOptions = listOf(
+        val settingsOptionsList = listOf(
             SettingOption(stringResource(R.string.text_logout), {
                 showLogoutDialog = true
             }),
@@ -94,11 +94,10 @@ fun SettingsScreen(authViewModel: AuthViewModel= hiltViewModel(),onNavigation:(S
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
-
-                //  Dynamic List Rendering
-                settingsOptions.forEachIndexed { index, item ->
+                
+                settingsOptionsList.forEachIndexed { index, item ->
                     SettingsItem(title = item.title, onClick = item.onClick)
-                    if (index != settingsOptions.lastIndex) {
+                    if (index != settingsOptionsList.lastIndex) {
                         HorizontalDivider(
                             modifier = Modifier,
                             thickness = DividerDefaults.Thickness,
