@@ -84,10 +84,10 @@ val items =listOf(BottomNavItem.Home,
             }
         }
     ) { padding ->
-        Box(modifier = Modifier.padding(bottom = padding.calculateBottomPadding())) {
+        Box {
             NavHost(navController = navController,
                 startDestination = BottomNavItem.Home.route,
-                modifier = Modifier.padding(padding))
+                )
             {
                 composable(BottomNavItem.Home.route)
                 {
