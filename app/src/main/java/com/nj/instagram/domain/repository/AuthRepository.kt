@@ -3,7 +3,7 @@ package com.nj.instagram.domain.repository
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.nj.instagram.data.db.UserDao
+import com.nj.instagram.data.db.dao.UserDao
 import com.nj.instagram.data.local.UserEntity
 import com.nj.instagram.data.preferences.SessionManager
 import kotlinx.coroutines.tasks.await

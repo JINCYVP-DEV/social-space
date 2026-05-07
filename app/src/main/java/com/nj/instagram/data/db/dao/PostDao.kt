@@ -1,4 +1,4 @@
-package com.nj.instagram.data.db
+package com.nj.instagram.data.db.dao
 
 import androidx.room.Delete
 import androidx.room.Insert

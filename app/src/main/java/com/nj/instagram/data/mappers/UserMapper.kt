@@ -1,6 +1,5 @@
 package com.nj.instagram.data.mappers
 
-import com.nj.instagram.data.db.UserDao
 import com.nj.instagram.data.local.UserEntity
 import com.nj.instagram.data.remote.UserDto
 import com.nj.instagram.domain.model.UserUiModel

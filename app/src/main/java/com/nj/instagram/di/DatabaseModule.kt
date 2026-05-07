@@ -3,7 +3,6 @@ package com.nj.instagram.di
 import android.content.Context
 import androidx.room.Room
 import com.nj.instagram.data.db.InstagramDataBase
-import com.nj.instagram.data.db.UserDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,4 +23,10 @@ object DatabaseModule {
     @Provides
     @Singleton
     fun providesUserDao(db: InstagramDataBase) =db.userDao()
+
+
+    @Provides
+    @Singleton
+    fun providePostDao(db: InstagramDataBase) = db.postDao()
+
 }
