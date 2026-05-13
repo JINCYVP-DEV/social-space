@@ -29,4 +29,17 @@ object DatabaseModule {
     @Singleton
     fun providePostDao(db: InstagramDataBase) = db.postDao()
 
+
+    @Provides
+    @Singleton
+    fun providesCommentDao(db: InstagramDataBase) = db.commentDao()
+
+
+    @Provides
+    @Singleton
+    fun providesFollowDao(db: InstagramDataBase)=db.followDao()
+
+    @Provides
+    @Singleton
+    fun providesLikesDao(db: InstagramDataBase)=db.likeDao()
 }

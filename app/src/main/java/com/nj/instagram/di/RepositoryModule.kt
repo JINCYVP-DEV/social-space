@@ -2,6 +2,7 @@ package com.nj.instagram.di
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.nj.instagram.data.db.dao.UserDao
 import com.nj.instagram.data.preferences.SessionManager
 import com.nj.instagram.domain.repository.AuthRepository
@@ -27,4 +28,9 @@ object RepositoryModule {
         userDao = userDao,
         firebaseFirestore = firebaseFirestore
     )
+
+
+
+
+
 }
