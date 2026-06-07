@@ -20,7 +20,7 @@ interface PostDao {
     suspend fun getPostById(postId:String): PostEntity?
 
     @Query("SELECT * FROM posts ORDER BY createdAt DESC LIMIT :limit OFFSET :offset")
-    suspend fun getFeedPost(limit:Int=20,offset:Int=0): Flow<List<PostEntity>>
+    fun getFeedPost(limit:Int=20,offset:Int=0): Flow<List<PostEntity>>
 
 
     @Query("SELECT * FROM posts WHERE userId = :userId ORDER BY createdAt DESC")
