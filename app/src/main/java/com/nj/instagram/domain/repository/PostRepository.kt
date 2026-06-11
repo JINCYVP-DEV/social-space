@@ -157,6 +157,14 @@ class PostRepositoryImpl @Inject constructor(
         return try {
             likeDao.unlikePost(postId,userId)
             val post=postDao.getPostById(postId)
+            val query = firebaseFirestore.collection("likes")
+                .whereEqualTo("postId",postId)
+                .whereEqualTo("userId",userId).get().await()
+            for (doc in query.documents)
+            {
+                firebaseFirestore.collection("likes")
+                    .document(doc.id).delete().await()
+            }
             post?.let {
                 if (it.likes>0)
                 postDao.updatePost(it.copy(likes = it.likes-1, isLiked = false))
