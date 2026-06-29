@@ -12,13 +12,13 @@ plugins {
 }
 
 android {
-    namespace = "com.nj.instagram"
+    namespace = "com.nj.space"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "com.nj.instagram"
+        applicationId = "com.nj.social.space"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
@@ -49,6 +49,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
