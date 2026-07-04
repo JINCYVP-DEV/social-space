@@ -12,7 +12,7 @@ plugins {
 }
 
 android {
-    namespace = "com.nj.space"
+    namespace = "com.nj.social.space"
     compileSdk {
         version = release(36)
     }

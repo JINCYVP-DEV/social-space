@@ -20,9 +20,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.nj.space.ui.theme.Black
-import com.nj.space.ui.theme.Critical100
-import com.nj.space.R
+import com.nj.social.space.R
+
 
 @Composable
 fun LogoutDialog(
@@ -55,10 +54,10 @@ fun LogoutDialog(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 TextButton(onClick = onDismiss) {
-                    Text(stringResource(R.string.text_cancel), fontSize = 16.sp, color = Black)
+                    Text(stringResource(R.string.text_cancel), fontSize = 16.sp, color = Color.Black)
                 }
                 TextButton(onClick = onConfirm) {
-                    Text(stringResource(R.string.text_login), fontSize = 16.sp, color = Critical100)
+                    Text(stringResource(R.string.text_login), fontSize = 16.sp, color = Color.Black)
                 }
             }
         }

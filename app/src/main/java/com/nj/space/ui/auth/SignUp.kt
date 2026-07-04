@@ -35,6 +35,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -43,22 +46,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.nj.space.R
-import com.nj.space.ui.theme.ColorBackground
-import com.nj.space.ui.theme.ColorBorder
-import com.nj.space.ui.theme.ColorDivider
 import com.nj.space.ui.theme.ColorError
-import com.nj.space.ui.theme.ColorLink
-import com.nj.space.ui.theme.ColorOnBackground
 import com.nj.space.ui.theme.ColorPrimary
-import com.nj.space.ui.theme.ColorPrimaryDisabled
-import com.nj.space.ui.theme.ColorSurfaceVariant
-import com.nj.space.ui.theme.ColorTextSecondary
 import com.nj.space.ui.theme.Medium14
 import com.nj.space.ui.theme.Normal12
 import com.nj.space.ui.theme.SemiBold12
 import com.nj.space.ui.theme.SemiBold14
-import com.nj.space.ui.theme.White
+import com.nj.social.space.R
+import com.nj.space.core.PasswordOutlinedTextField
+import com.nj.space.core.SocialSpaceOutlinedTextField
+import com.nj.space.ui.theme.BottomGrey
+import com.nj.space.ui.theme.ColorDivider
+import com.nj.space.ui.theme.Orange0
+import com.nj.space.ui.theme.Orange1
+import com.nj.space.ui.theme.Orange2
+import com.nj.space.ui.theme.TextWhite
+import com.nj.space.ui.theme.TopWhite
 
 sealed class SignUpNavigationEvent {
     object LoggedOut : SignUpNavigationEvent()
@@ -70,17 +73,21 @@ sealed class SignUpNavigationEvent {
 @Composable
 fun SignUp(viewModel: AuthViewModel = hiltViewModel(),onNavigation:(SignUpNavigationEvent)->Unit)
 {
-    var username by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var passwordVisible by remember { mutableStateOf(false) }
+    var username = remember { mutableStateOf("") }
+    var email = remember { mutableStateOf("") }
+    var password = remember { mutableStateOf("") }
+    var passwordVisible = remember { mutableStateOf(false) }
     var showEmailError by remember { mutableStateOf(false) }
     val uiState by  viewModel.uiState.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(ColorBackground)
+            .background(brush = Brush.verticalGradient(colors = listOf(
+                Orange0,
+                Orange1,
+                Orange2
+        )))
             .verticalScroll(rememberScrollState())
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -92,97 +99,34 @@ fun SignUp(viewModel: AuthViewModel = hiltViewModel(),onNavigation:(SignUpNaviga
             fontWeight = FontWeight.Light,
             fontSize = 48.sp,
             letterSpacing = 2.sp,
-            color = ColorOnBackground,
+            color = Color.Black,
             modifier = Modifier.padding(bottom = 40.dp)
         )
+        SocialSpaceOutlinedTextField(username,stringResource(R.string.text_user_name))
 
-        OutlinedTextField(
-            value = username,
-            onValueChange = {
-                username=it
-            },
-            label = {Text(stringResource(R.string.text_user_name),
-            style = MaterialTheme.typography.Medium14)},
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
-            textStyle = MaterialTheme.typography.Medium14,
-            shape = RoundedCornerShape(4.dp),
-            colors = OutlinedTextFieldDefaults.colors(
-                unfocusedBorderColor = ColorBorder,
-                focusedBorderColor = ColorBorder,
-                unfocusedContainerColor = ColorSurfaceVariant,
-                focusedContainerColor = ColorBackground
-            )
-        )
         Spacer(modifier = Modifier.height(10.dp))
-
-        // Email
-        OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
-            label = { Text(stringResource(R.string.text_email),
-            style = MaterialTheme.typography.Medium14) },
-            isError = showEmailError,
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
-            textStyle = MaterialTheme.typography.Medium14,
-            shape = RoundedCornerShape(4.dp),
-            colors = OutlinedTextFieldDefaults.colors(
-                unfocusedBorderColor = if (showEmailError) ColorError else ColorBorder,
-                focusedBorderColor = if (showEmailError) ColorError else ColorBorder,
-                unfocusedContainerColor = ColorSurfaceVariant,
-                focusedContainerColor = White
-            )
-        )
+        SocialSpaceOutlinedTextField(email,stringResource(R.string.text_email))
         Spacer(modifier = Modifier.height(20.dp))
-        OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { Text(stringResource(R.string.text_password), style = MaterialTheme.typography.Medium14) },
-            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-            trailingIcon = {
-                IconButton(
-                    onClick = { passwordVisible = !passwordVisible },
-                    modifier = Modifier.size(20.dp)
-                ) {
-                    Icon(
-                        imageVector = if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
-                        contentDescription = if (passwordVisible) stringResource(R.string.text_hide_password) else stringResource(R.string.text_show_password),
-                        tint = ColorOnBackground,
-                        modifier = Modifier.size(18.dp)
-                    )
-                }
-            },
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
-            textStyle = MaterialTheme.typography.Medium14,
-            shape = RoundedCornerShape(4.dp),
-            colors = OutlinedTextFieldDefaults.colors(
-                unfocusedBorderColor = ColorBorder,
-                focusedBorderColor = ColorBorder,
-                unfocusedContainerColor = ColorSurfaceVariant,
-                focusedContainerColor = ColorBackground
-            )
-        )
+        PasswordOutlinedTextField(password,passwordVisible)
         Spacer(modifier = Modifier.height(20.dp))
 
         // Sign Up Button
         Button(
             onClick = {
                 // Validate email on submit
-                if (!viewModel.validateEmail(email.trim())) {
+                if (!viewModel.validateEmail(email.value.trim())) {
                     showEmailError = true
                     return@Button
                 } else {
                     showEmailError = false
-                    viewModel.signUp(email=email.trim(), password =  password.trim(), username =  username.trim())
+                    viewModel.signUp(email=email.value.trim(), password =  password.value.trim(), username =  username.value.trim())
                 }
             },
             modifier = Modifier.fillMaxWidth(),
-            enabled = username.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty() && uiState !is AuthUiState.Loading,
+            enabled = username.value.isNotEmpty() && email.value.isNotEmpty() && password.value.isNotEmpty() && uiState !is AuthUiState.Loading,
             colors = ButtonDefaults.buttonColors(
                 containerColor = ColorPrimary,
-                disabledContainerColor = ColorPrimaryDisabled
+                disabledContainerColor = TextWhite
             ),
             shape = RoundedCornerShape(4.dp)
         ) {
@@ -220,13 +164,13 @@ fun SignUp(viewModel: AuthViewModel = hiltViewModel(),onNavigation:(SignUpNaviga
             Text(
                 stringResource(R.string.text_already_have_account),
                 style = MaterialTheme.typography.Normal12,
-                color = ColorTextSecondary
+                color = Color.White
             )
             TextButton(onClick = { onNavigation(SignUpNavigationEvent.OnNavigateToLogin) }) {
                 Text(
                     stringResource(R.string.text_login),
                     style = MaterialTheme.typography.SemiBold12,
-                    color = ColorLink
+                    color = Color.Black
                 )
             }
         }

@@ -3,6 +3,11 @@ package com.nj.space.di
 import android.content.Context
 import androidx.room.Room
 import com.nj.space.data.db.SocialSpaceDataBase
+import com.nj.space.data.db.dao.CommentDao
+import com.nj.space.data.db.dao.FollowDao
+import com.nj.space.data.db.dao.LikeDao
+import com.nj.space.data.db.dao.PostDao
+import com.nj.space.data.db.dao.UserDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,24 +27,34 @@ object DatabaseModule {
 
     @Provides
     @Singleton
-    fun providesUserDao(db: SocialSpaceDataBase) =db.userDao()
+    fun providesUserDao(db: SocialSpaceDataBase): UserDao {
+        return db.userDao()
+    }
 
 
     @Provides
     @Singleton
-    fun providePostDao(db: SocialSpaceDataBase) = db.postDao()
+    fun providePostDao(db: SocialSpaceDataBase) : PostDao{
+        return db.postDao()
+    }
 
 
     @Provides
     @Singleton
-    fun providesCommentDao(db: SocialSpaceDataBase) = db.commentDao()
+    fun providesCommentDao(db: SocialSpaceDataBase) : CommentDao{
+        return  db.commentDao()
+    }
 
 
     @Provides
     @Singleton
-    fun providesFollowDao(db: SocialSpaceDataBase)=db.followDao()
+    fun providesFollowDao(db: SocialSpaceDataBase) : FollowDao {
+        return db.followDao()
+    }
 
     @Provides
     @Singleton
-    fun providesLikesDao(db: SocialSpaceDataBase)=db.likeDao()
+    fun providesLikesDao(db: SocialSpaceDataBase): LikeDao{
+        return db.likeDao()
+    }
 }

@@ -31,7 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.nj.space.R
+import com.nj.social.space.R
 
 sealed class SettingsScreenNavigationEvents{
     object NavigateToLogin: SettingsScreenNavigationEvents()

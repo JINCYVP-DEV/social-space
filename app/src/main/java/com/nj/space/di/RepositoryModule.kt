@@ -9,7 +9,9 @@ import com.nj.space.data.db.dao.PostDao
 import com.nj.space.data.db.dao.UserDao
 import com.nj.space.data.preferences.SessionManager
 import com.nj.space.domain.repository.AuthRepository
+import com.nj.space.domain.repository.PostRepository
 import com.nj.space.domain.repository.PostRepositoryImpl
+import com.nj.space.domain.repository.UserRepository
 import com.nj.space.domain.repository.UserRepositoryImpl
 import dagger.Module
 import dagger.Provides
@@ -36,7 +38,7 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun providesPostRepository(postDao: PostDao,commentDao: CommentDao,likeDao: LikeDao, firebaseFirestore: FirebaseFirestore): PostRepositoryImpl= PostRepositoryImpl(
+    fun providesPostRepository(postDao: PostDao,commentDao: CommentDao,likeDao: LikeDao, firebaseFirestore: FirebaseFirestore): PostRepository = PostRepositoryImpl(
         postDao = postDao,
         commentDao = commentDao,
         likeDao = likeDao,
@@ -45,13 +47,11 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun providesUserRepository(userDao: UserDao,followDao: FollowDao,firebaseFirestore: FirebaseFirestore): UserRepositoryImpl =UserRepositoryImpl(
+    fun providesUserRepository(userDao: UserDao,followDao: FollowDao,firebaseFirestore: FirebaseFirestore): UserRepository =UserRepositoryImpl(
         userDao = userDao,
         followDao = followDao,
         firebaseFirestore = firebaseFirestore
     )
-
-
 
 
 }

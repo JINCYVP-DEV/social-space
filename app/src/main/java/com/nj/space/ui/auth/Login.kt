@@ -1,5 +1,8 @@
 package com.nj.space.ui.auth
 
+import android.graphics.RenderEffect
+import android.graphics.Shader
+import android.os.Build
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,17 +17,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -35,30 +32,31 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asComposeRenderEffect
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.nj.space.R
-import com.nj.space.ui.theme.ColorBackground
-import com.nj.space.ui.theme.ColorBorder
+import com.nj.social.space.R
+import com.nj.space.core.PasswordOutlinedTextField
+import com.nj.space.core.SocialSpaceOutlinedTextField
 import com.nj.space.ui.theme.ColorDivider
 import com.nj.space.ui.theme.ColorError
-import com.nj.space.ui.theme.ColorLink
-import com.nj.space.ui.theme.ColorOnBackground
-import com.nj.space.ui.theme.ColorPrimary
-import com.nj.space.ui.theme.ColorPrimaryDisabled
-import com.nj.space.ui.theme.ColorSurfaceVariant
-import com.nj.space.ui.theme.ColorTextSecondary
-import com.nj.space.ui.theme.Medium14
 import com.nj.space.ui.theme.Normal12
+import com.nj.space.ui.theme.Orange0
 import com.nj.space.ui.theme.SemiBold12
 import com.nj.space.ui.theme.SemiBold14
-import com.nj.space.ui.theme.White
+import com.nj.space.ui.theme.TextWhite
+import com.nj.space.ui.theme.TopWhite
+import com.nj.space.ui.theme.Focused
+import com.nj.space.ui.theme.Orange1
+import com.nj.space.ui.theme.Orange2
+import com.nj.space.ui.theme.Unfocused
 
 sealed class LoginNavigationEvent {
     object OnLoginSuccess : LoginNavigationEvent()
@@ -100,7 +98,16 @@ fun Screen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(ColorBackground)
+            .background(brush = Brush.linearGradient(colors = listOf(
+
+                    Orange0,
+                Orange1,
+                Orange2,
+
+
+                ))
+
+            )
             .verticalScroll(rememberScrollState())
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -113,66 +120,19 @@ fun Screen(
             fontWeight = FontWeight.Light,
             fontSize = 48.sp,
             letterSpacing = 2.sp,
-            color = ColorOnBackground,
+            color = Color.Black,
             modifier = Modifier.padding(bottom = 40.dp)
         )
 
         Spacer(Modifier.height(16.dp))
 
         // Email TextField
-        OutlinedTextField(
-            value = emailState.value,
-            onValueChange = { emailState.value = it },
-            label = {
-                Text(
-                    text = stringResource(R.string.text_ph_username_email),
-                    style = MaterialTheme.typography.Medium14
-                )
-            },
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
-            textStyle = MaterialTheme.typography.Medium14,
-            shape = RoundedCornerShape(4.dp),
-            colors = OutlinedTextFieldDefaults.colors(
-                unfocusedBorderColor = ColorBorder,
-                focusedBorderColor = ColorBorder,
-                unfocusedContainerColor = ColorSurfaceVariant,
-                focusedContainerColor = ColorBackground
-            )
-        )
+        SocialSpaceOutlinedTextField(emailState,stringResource(R.string.text_ph_username_email))
 
         Spacer(modifier = Modifier.height(10.dp))
 
         // Password TextField
-        OutlinedTextField(
-            value = password.value,
-            onValueChange = { password.value = it },
-            label = { Text(stringResource(R.string.text_password), style = MaterialTheme.typography.Medium14) },
-            visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
-            trailingIcon = {
-                IconButton(
-                    onClick = { passwordVisible.value = !passwordVisible.value },
-                    modifier = Modifier.size(20.dp)
-                ) {
-                    Icon(
-                        imageVector = if (passwordVisible.value) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
-                        contentDescription = if (passwordVisible.value) stringResource(R.string.text_hide_password) else stringResource(R.string.text_show_password),
-                        tint = ColorOnBackground,
-                        modifier = Modifier.size(18.dp)
-                    )
-                }
-            },
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true,
-            textStyle = MaterialTheme.typography.Medium14,
-            shape = RoundedCornerShape(4.dp),
-            colors = OutlinedTextFieldDefaults.colors(
-                unfocusedBorderColor = ColorBorder,
-                focusedBorderColor = ColorBorder,
-                unfocusedContainerColor = ColorSurfaceVariant,
-                focusedContainerColor = ColorBackground
-            )
-        )
+        PasswordOutlinedTextField(password,passwordVisible)
 
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -182,21 +142,21 @@ fun Screen(
             modifier = Modifier.fillMaxWidth(),
             enabled = emailState.value.isNotEmpty() && password.value.isNotEmpty() && uiState !is AuthUiState.Loading,
             colors = ButtonDefaults.buttonColors(
-                containerColor = ColorPrimary,
-                disabledContainerColor = ColorPrimaryDisabled
+                containerColor = Focused,
+                disabledContainerColor =Unfocused
             ),
             shape = RoundedCornerShape(4.dp)
         ) {
             if (uiState is AuthUiState.Loading) {
                 CircularProgressIndicator(
-                    color = ColorBackground,
+                    color = Focused,
                     modifier = Modifier.size(16.dp),
                     strokeWidth = 2.dp
                 )
             } else {
                 Text(text = stringResource(R.string.text_login),
                     style = MaterialTheme.typography.SemiBold14,
-                    color = White
+                    color = TextWhite
                 )
             }
         }
@@ -220,7 +180,7 @@ fun Screen(
                 stringResource(R.string.text_or),
                 modifier = Modifier.padding(horizontal = 16.dp),
                 style = MaterialTheme.typography.SemiBold12,
-                color = ColorTextSecondary
+                color = Color.Black
             )
             Box(
                 modifier = Modifier
@@ -240,7 +200,7 @@ fun Screen(
             Text(
                 text = stringResource(R.string.text_forgot_password),
                 style = MaterialTheme.typography.Normal12,
-                color = ColorLink
+                color = Color.Black
             )
         }
 
@@ -265,7 +225,7 @@ fun Screen(
             Text(
                 text = stringResource(R.string.text_dont_have_account),
                 style = MaterialTheme.typography.Normal12,
-                color = ColorTextSecondary
+                color = Color.Black
             )
             TextButton(
                 onClick = { onNavigateToSignUp() },
@@ -274,7 +234,7 @@ fun Screen(
                 Text(
                     text = stringResource(R.string.text_sign_up),
                     style = MaterialTheme.typography.SemiBold12,
-                    color = ColorLink
+                    color = Color.Black
                 )
             }
         }

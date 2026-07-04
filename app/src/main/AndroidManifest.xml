@@ -7,12 +7,12 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".SocialSpaceApp"
+        android:name="com.nj.space.SocialSpaceApp"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SocialSpace">
         <activity
-            android:name=".MainActivity"
+            android:name="com.nj.space.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.SocialSpace">
             <intent-filter>

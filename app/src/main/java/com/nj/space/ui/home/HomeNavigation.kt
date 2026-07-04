@@ -21,10 +21,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.nj.space.ui.MessageScreen
-import com.nj.space.ui.ProfileScreen
-import com.nj.space.ui.ReelsScreen
-import com.nj.space.ui.SearchScreen
+import com.nj.space.ui.message.MessageScreen
+import com.nj.space.ui.profile.ProfileNavigationEvent
+import com.nj.space.ui.profile.ProfileScreen
+import com.nj.space.ui.reels.ReelsNavigationEvent
+import com.nj.space.ui.reels.ReelsScreen
+import com.nj.space.ui.search.SearchNavigationEvent
+import com.nj.space.ui.search.SearchScreen
 
 sealed class BottomNavItem(val route: String,val icon: ImageVector,val label: String)
 {
@@ -88,22 +91,64 @@ val items =listOf(BottomNavItem.Home,
                 composable(BottomNavItem.Home.route)
                 {
                     HomeScreen()
+                    {
+                        when(it)
+                        {
+                            is HomeViewModel.HomeScreenNavigation.NavigatePostProfile -> {
+
+                            }
+                            is HomeViewModel.HomeScreenNavigation.NavigatePost -> {
+
+                            }
+                        }
+                    }
                 }
                 composable(BottomNavItem.Search.route)
                 {
                     SearchScreen()
+                    {
+                        when(it)
+                        {
+                            is SearchNavigationEvent.NavigateBack -> {
+                                navController.navigateUp()
+                            }
+                        }
+                    }
                 }
                 composable(BottomNavItem.Reels.route)
                 {
                     ReelsScreen()
+                    {
+                        when(it)
+                        {
+                            is ReelsNavigationEvent.NavigateBack -> {
+                                navController.navigateUp()
+                            }
+                        }
+                    }
                 }
                 composable(BottomNavItem.Message.route)
                 {
-                    MessageScreen()
+                    MessageScreen{
+                        when(it)
+                        {
+                            is ProfileNavigationEvent.NavigateBack -> {
+                                navController.navigateUp()
+                            }
+                        }
+                    }
                 }
                 composable(BottomNavItem.Profile.route)
                 {
                     ProfileScreen()
+                    {
+                        when(it)
+                        {
+                            is ProfileNavigationEvent.NavigateBack -> {
+                                navController.navigateUp()
+                            }
+                        }
+                    }
                 }
             }
         }

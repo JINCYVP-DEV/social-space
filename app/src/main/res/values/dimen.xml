@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_small">4dp</dimen>
+    <dimen name="margin_regular">8dp</dimen>
+    <dimen name="margin_medium">12dp</dimen>
+    <dimen name="margin_large">14dp</dimen>
+
+    <dimen name="screen_margin_horizontal">16dp</dimen>
+    <dimen name="screen_margin_vertical">12dp</dimen>
+    <dimen name="item_spacing_small">8dp</dimen>
+    <dimen name="item_spacing_large">24dp</dimen>
+
+    <dimen name="profile_image_size">50dp</dimen>
+    <dimen name="post_image_height">250dp</dimen>
+    <dimen name="button_height">48dp</dimen>
+
+    <dimen name="icon_size_large">35sp</dimen>
+    <dimen name="icon_size_medium">20sp</dimen>
+    <dimen name="icon_size_regular">16sp</dimen>
+    <dimen name="icon_size_small">14sp</dimen>
+</resources>

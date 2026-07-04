@@ -13,7 +13,7 @@ import com.nj.space.ui.splash.SplashNavigation
 import com.nj.space.ui.splash.splashGraph
 
 @Composable
-fun InstaNavigationGraph()
+fun SocialSpaceNavigationGraph()
 {
     val navController= rememberNavController()
     Scaffold(modifier = Modifier.fillMaxSize()) {innerPadding->

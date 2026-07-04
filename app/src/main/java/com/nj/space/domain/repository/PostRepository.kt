@@ -131,8 +131,9 @@ class PostRepositoryImpl @Inject constructor(
         return try {
             val like= LikeEntity(postId,userId)
             likeDao.likePost(like)
-            firebaseFirestore.collection("likes")
-                .add(mapOf(
+            val likeId="${userId}_$postId"
+            firebaseFirestore.collection("likes").document(likeId)
+                .set(mapOf(
                     "postId" to postId,
                     "userId" to userId,
                     "createdAt" to System.currentTimeMillis()
@@ -155,14 +156,8 @@ class PostRepositoryImpl @Inject constructor(
         return try {
             likeDao.unlikePost(postId,userId)
             val post=postDao.getPostById(postId)
-            val query = firebaseFirestore.collection("likes")
-                .whereEqualTo("postId",postId)
-                .whereEqualTo("userId",userId).get().await()
-            for (doc in query.documents)
-            {
-                firebaseFirestore.collection("likes")
-                    .document(doc.id).delete().await()
-            }
+            val likeId="${userId}_$postId"
+            firebaseFirestore.collection("likes").document(likeId).delete().await()
             post?.let {
                 if (it.likes>0)
                 postDao.updatePost(it.copy(likes = it.likes-1, isLiked = false))

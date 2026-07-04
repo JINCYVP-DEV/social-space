@@ -1,5 +1,6 @@
 package com.nj.space.data.db.dao
 
+import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -8,6 +9,7 @@ import androidx.room.Update
 import com.nj.space.data.local.PostEntity
 import kotlinx.coroutines.flow.Flow
 
+@Dao
 interface PostDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

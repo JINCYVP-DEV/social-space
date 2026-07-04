@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import com.nj.space.nav.InstaNavigationGraph
+import com.nj.space.nav.SocialSpaceNavigationGraph
 import com.nj.space.ui.theme.SocialSpaceTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             SocialSpaceTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    InstaNavigationGraph()
+                    SocialSpaceNavigationGraph()
                 }
             }
         }

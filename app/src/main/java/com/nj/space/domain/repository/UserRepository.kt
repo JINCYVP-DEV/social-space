@@ -80,7 +80,8 @@ class UserRepositoryImpl @Inject constructor(
         return try {
             val follow = FollowEntity(followerId,followingId)
             followDao.followUser(follow)
-            firebaseFirestore.collection("follows").add(
+            val followId= "${followerId}_${followingId}"
+            firebaseFirestore.collection("follows").document(followId).set(
                 mapOf("followerId" to followerId,
                     "followingId" to followingId,
                     "createdAt" to System.currentTimeMillis())
@@ -97,15 +98,8 @@ class UserRepositoryImpl @Inject constructor(
     ): Result<Unit> {
         return try {
             followDao.unfollowUser(followerId,followingId)
-            val query = firebaseFirestore.collection("follows")
-                .whereEqualTo("followerId" ,followerId)
-                .whereEqualTo("followingId" ,followingId)
-                .get().await()
-            for (doc in query.documents ){
-                firebaseFirestore.collection("follows")
-                    .document(doc.id)
-                    .delete().await()
-            }
+            val followId="${followerId}_${followingId}"
+            firebaseFirestore.collection("follows").document(followId).delete().await()
             Result.success(Unit)
         }catch (e: Exception)
         {

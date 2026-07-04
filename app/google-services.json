@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "590307292187",
+    "project_id": "social-space-app-01",
+    "storage_bucket": "social-space-app-01.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:590307292187:android:b52606a20d6805209b34be",
+        "android_client_info": {
+          "package_name": "com.nj.social.space"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVYFN4NrDYzEw4qJjgpSpBEIqYP0ESNKg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
