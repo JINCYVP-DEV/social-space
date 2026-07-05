@@ -38,14 +38,14 @@ val Typography = Typography(
 )
 
 
-val Typography.Bold20: TextStyle
+val Typography.Normal20: TextStyle
     @Composable
     get() {
         return TextStyle(
-            fontFamily = FontFamily(Font(R.font.poppins_bold)),
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp,
-            lineHeight = 24.sp,
+            fontFamily = FontFamily(Font(R.font.poppins_light)),
+            fontWeight = FontWeight.Normal,
+            fontSize = 25.sp,
+            lineHeight = 34.sp,
         )
     }
 val Typography.Bold16: TextStyle

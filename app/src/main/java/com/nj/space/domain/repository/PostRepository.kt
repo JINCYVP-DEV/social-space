@@ -1,16 +1,25 @@
 package com.nj.space.domain.repository
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.net.Uri
+import android.provider.MediaStore
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.storageMetadata
 import com.nj.space.data.db.dao.CommentDao
 import com.nj.space.data.db.dao.LikeDao
 import com.nj.space.data.db.dao.PostDao
 import com.nj.space.data.local.CommentEntity
 import com.nj.space.data.local.LikeEntity
 import com.nj.space.data.local.PostEntity
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.tasks.await
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.util.UUID
 import javax.inject.Inject
 
@@ -19,7 +28,7 @@ interface PostRepository {
     fun getFeedPosts(): Flow<List<PostEntity>>
     suspend fun syncUserPosts(userId: String)
     fun getUserPostsFromDao(userId: String): Flow<List<PostEntity>>
-    suspend fun uploadPost(userId: String, imageUrl: String, caption: String): Result<String>
+    suspend fun uploadPost(userId: String, uri: Uri, caption: String, onProgress: (Int) -> Unit): Result<String>
     suspend fun likePost(postId: String, userId: String): Result<Unit>
     suspend fun unlikePost(postId: String, userId: String): Result<Unit>
     suspend fun addComment(postId: String, userId: String, text: String): Result<String>
@@ -32,7 +41,9 @@ class PostRepositoryImpl @Inject constructor(
     private val postDao: PostDao,
     private val commentDao: CommentDao,
     private val likeDao: LikeDao,
-    private val firebaseFirestore: FirebaseFirestore
+    private val firebaseFirestore: FirebaseFirestore,
+    private val firebaseStorage: FirebaseStorage,
+  @ApplicationContext private val context: Context
 ) : PostRepository {
 
     val pageSize = 10
@@ -102,9 +113,28 @@ class PostRepositoryImpl @Inject constructor(
 
     override fun getUserPostsFromDao(userId: String): Flow<List<PostEntity>> = postDao.getUserPosts(userId)
     override suspend fun uploadPost(
-        userId: String, imageUrl: String, caption: String
+        userId: String, uri: Uri,
+        caption: String,
+        onProgress: (Int) -> Unit
+
     ): Result<String> {
        return try {
+           //upload into firebase cloud
+//           val compressedImg= compressImage(uri)
+//           val metadata = storageMetadata {
+//               contentType = "image/jpeg"
+//           }
+//           val ref= firebaseStorage.reference.child("posts/${userId}/${UUID.randomUUID()}.jpg")
+//           ref.putBytes(compressedImg,metadata)
+//               .addOnProgressListener { task->
+//                   val progress = ((100.0 * task.bytesTransferred) / task.totalByteCount).toInt()
+//                   onProgress(progress)
+//               }
+//               .await()
+          // val imageUrl= ref.downloadUrl.await().toString()
+           val imageUrl= "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d"
+
+           //upload into firebase db
            val postId= UUID.randomUUID().toString()
            val post= mapOf(
                "id" to postId,
@@ -193,4 +223,10 @@ class PostRepositoryImpl @Inject constructor(
     override fun getPostComments(postId: String): Flow<List<CommentEntity>> =commentDao.getPostComments(postId)
 
     override fun searchPosts(query: String): Flow<List<PostEntity>> =postDao.searchPosts(query)
+    private fun compressImage(uri: Uri): ByteArray
+    {
+        val bitmap = MediaStore.Images.Media.getBitmap(context.contentResolver,uri)
+        return ByteArrayOutputStream().also { bitmap.compress(Bitmap.CompressFormat.JPEG,80,it) }.toByteArray()
+
+    }
 }

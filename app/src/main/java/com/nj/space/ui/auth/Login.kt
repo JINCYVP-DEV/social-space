@@ -57,6 +57,7 @@ import com.nj.space.ui.theme.SemiBold14
 import com.nj.space.ui.theme.TextWhite
 import com.nj.space.ui.theme.TopWhite
 import com.nj.space.ui.theme.Focused
+import com.nj.space.ui.theme.Normal20
 import com.nj.space.ui.theme.Orange1
 import com.nj.space.ui.theme.Orange2
 import com.nj.space.ui.theme.Unfocused
@@ -112,9 +113,9 @@ fun Screen(
         // App Logo
         Text(
             text = stringResource(R.string.app_name),
-            style = MaterialTheme.typography.displayMedium,
+            style = MaterialTheme.typography.Normal20,
             fontWeight = FontWeight.Light,
-            fontSize = 48.sp,
+            fontSize = 35.sp,
             letterSpacing = 2.sp,
             color = Color.Black,
             modifier = Modifier.padding(bottom = 40.dp)

@@ -38,6 +38,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -56,9 +57,9 @@ import com.nj.social.space.R
 import com.nj.space.core.AuthButton
 import com.nj.space.core.PasswordOutlinedTextField
 import com.nj.space.core.SocialSpaceOutlinedTextField
-import com.nj.space.ui.theme.BottomGrey
 import com.nj.space.ui.theme.ColorDivider
 import com.nj.space.ui.theme.Focused
+import com.nj.space.ui.theme.Normal20
 import com.nj.space.ui.theme.Orange0
 import com.nj.space.ui.theme.Orange1
 import com.nj.space.ui.theme.Orange2
@@ -91,13 +92,11 @@ fun SignUp(viewModel: AuthViewModel = hiltViewModel(),onNavigation:(SignUpNaviga
         verticalArrangement = Arrangement.Center
     ) {
         Text(
-            text = stringResource(R.string.app_name),
-            style = MaterialTheme.typography.displayMedium,
+            text = stringResource(R.string.app_description),
+            style = MaterialTheme.typography.Normal20,
             fontWeight = FontWeight.Light,
-            fontSize = 48.sp,
-            letterSpacing = 2.sp,
             color = Color.Black,
-            modifier = Modifier.padding(bottom = 40.dp)
+            modifier = Modifier.padding(bottom = dimensionResource(R.dimen.margin_extra_large))
         )
         SocialSpaceOutlinedTextField(username,stringResource(R.string.text_user_name))
 

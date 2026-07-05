@@ -1,7 +1,9 @@
 package com.nj.space.di
 
+import android.content.Context
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.nj.space.data.db.dao.CommentDao
 import com.nj.space.data.db.dao.FollowDao
 import com.nj.space.data.db.dao.LikeDao
@@ -16,6 +18,7 @@ import com.nj.space.domain.repository.UserRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
@@ -38,11 +41,13 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun providesPostRepository(postDao: PostDao,commentDao: CommentDao,likeDao: LikeDao, firebaseFirestore: FirebaseFirestore): PostRepository = PostRepositoryImpl(
+    fun providesPostRepository(postDao: PostDao,commentDao: CommentDao,likeDao: LikeDao, firebaseFirestore: FirebaseFirestore,firebaseStorage: FirebaseStorage,   @ApplicationContext context: Context ): PostRepository = PostRepositoryImpl(
         postDao = postDao,
         commentDao = commentDao,
         likeDao = likeDao,
-        firebaseFirestore = firebaseFirestore
+        firebaseFirestore = firebaseFirestore,
+        firebaseStorage = firebaseStorage,
+        context = context,
     )
 
     @Provides
