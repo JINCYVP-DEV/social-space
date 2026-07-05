@@ -8,8 +8,14 @@ import com.google.firebase.firestore.PropertyName
 import kotlinx.serialization.Serializable
 
 @Entity(tableName = "posts",
-    foreignKeys = [ForeignKey(entity = UserEntity::class, parentColumns = ["id"], childColumns = ["userId"])])
-@Serializable
+    foreignKeys = [ForeignKey(
+    entity = UserEntity::class,
+    parentColumns = ["id"],
+    childColumns = ["userId"],
+    onDelete = ForeignKey.CASCADE, // Deletes the posts if the user profile gets deleted
+    deferred = true     )           // Delays verification until the database save finishes
+])
+    @Serializable
 data class PostEntity(
     @get:PropertyName("id")
     @set:PropertyName("id")

@@ -96,7 +96,7 @@ fun SignUp(viewModel: AuthViewModel = hiltViewModel(),onNavigation:(SignUpNaviga
             style = MaterialTheme.typography.Normal20,
             fontWeight = FontWeight.Light,
             color = Color.Black,
-            modifier = Modifier.padding(bottom = dimensionResource(R.dimen.margin_extra_large))
+            modifier = Modifier.padding(bottom = dimensionResource(R.dimen.margin_large))
         )
         SocialSpaceOutlinedTextField(username,stringResource(R.string.text_user_name))
 

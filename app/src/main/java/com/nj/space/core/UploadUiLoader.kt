@@ -24,7 +24,7 @@ fun UploadUiLoader(uiState: UploadState, content: @Composable ()-> Unit)
         is UploadState.Error -> {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Text(
-                    text = (uiState as UiState.Error).message,
+                    text = (uiState as UploadState.Error).message,
                     color = MaterialTheme.colorScheme.error,
                     textAlign = TextAlign.Center
                 )

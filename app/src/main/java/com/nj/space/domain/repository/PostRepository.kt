@@ -119,19 +119,6 @@ class PostRepositoryImpl @Inject constructor(
 
     ): Result<String> {
        return try {
-           //upload into firebase cloud
-//           val compressedImg= compressImage(uri)
-//           val metadata = storageMetadata {
-//               contentType = "image/jpeg"
-//           }
-//           val ref= firebaseStorage.reference.child("posts/${userId}/${UUID.randomUUID()}.jpg")
-//           ref.putBytes(compressedImg,metadata)
-//               .addOnProgressListener { task->
-//                   val progress = ((100.0 * task.bytesTransferred) / task.totalByteCount).toInt()
-//                   onProgress(progress)
-//               }
-//               .await()
-          // val imageUrl= ref.downloadUrl.await().toString()
            val imageUrl= "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d"
 
            //upload into firebase db
