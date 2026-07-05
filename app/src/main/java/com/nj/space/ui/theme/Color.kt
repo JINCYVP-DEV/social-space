@@ -16,8 +16,8 @@ val ColorBackground = Color(0xFFFFFFFF)
 val Orange0 = Color(0xFFEDEFEF)
 val Orange2 = Color(0xFFBB8D55)
 val Orange1 = Color(0xFFD5BE99)
-val Focused = Color(0xFF1E1814)
-val Unfocused = Color(0xFF7F776F)
+val Focused = Color(0xFFE8871E)
+val Unfocused = Color(0xFFFFDDB3)
 
 // Neutral / Gray Shades
 val ColorDivider = Color(0xFFDBDBDB)

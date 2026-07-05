@@ -2,6 +2,7 @@ package com.nj.space.ui.home
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddAPhoto
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.NearMe
 import androidx.compose.material.icons.filled.Person
@@ -33,7 +34,7 @@ sealed class BottomNavItem(val route: String,val icon: ImageVector,val label: St
 {
     object Home: BottomNavItem("home",Icons.Default.Home,"Home")
     object Search : BottomNavItem("search", Icons.Default.Search, "Search")
-    object Reels : BottomNavItem("reels", Icons.Default.VideoLibrary, "Reels")
+    object Reels : BottomNavItem("reels", Icons.Default.AddAPhoto, "Reels")
     object Message : BottomNavItem("message", Icons.Default.NearMe, "Message")
     object Profile : BottomNavItem("profile", Icons.Default.Person, "Profile")
 }

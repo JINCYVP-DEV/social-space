@@ -23,6 +23,7 @@ import com.nj.social.space.R
 import com.nj.space.ui.theme.ColorBackground
 import com.nj.space.ui.theme.ColorBorder
 import com.nj.space.ui.theme.ColorSurfaceVariant
+import com.nj.space.ui.theme.Focused
 import com.nj.space.ui.theme.Medium14
 import com.nj.space.ui.theme.TextWhite
 
@@ -42,7 +43,7 @@ fun PasswordOutlinedTextField(state:MutableState<String>, passwordVisible :Mutab
                 Icon(
                     imageVector = if (passwordVisible.value) Icons.Filled.Visibility else Icons.Filled.VisibilityOff,
                     contentDescription = if (passwordVisible.value) stringResource(R.string.text_hide_password) else stringResource(R.string.text_show_password),
-                    tint = TextWhite,
+                    tint = Focused,
                     modifier = Modifier.size(18.dp)
                 )
             }

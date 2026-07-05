@@ -53,10 +53,12 @@ import com.nj.space.ui.theme.Normal12
 import com.nj.space.ui.theme.SemiBold12
 import com.nj.space.ui.theme.SemiBold14
 import com.nj.social.space.R
+import com.nj.space.core.AuthButton
 import com.nj.space.core.PasswordOutlinedTextField
 import com.nj.space.core.SocialSpaceOutlinedTextField
 import com.nj.space.ui.theme.BottomGrey
 import com.nj.space.ui.theme.ColorDivider
+import com.nj.space.ui.theme.Focused
 import com.nj.space.ui.theme.Orange0
 import com.nj.space.ui.theme.Orange1
 import com.nj.space.ui.theme.Orange2
@@ -73,21 +75,16 @@ sealed class SignUpNavigationEvent {
 @Composable
 fun SignUp(viewModel: AuthViewModel = hiltViewModel(),onNavigation:(SignUpNavigationEvent)->Unit)
 {
-    var username = remember { mutableStateOf("") }
-    var email = remember { mutableStateOf("") }
-    var password = remember { mutableStateOf("") }
-    var passwordVisible = remember { mutableStateOf(false) }
+    val username = remember { mutableStateOf("") }
+    val email = remember { mutableStateOf("") }
+    val password = remember { mutableStateOf("") }
+    val passwordVisible = remember { mutableStateOf(false) }
     var showEmailError by remember { mutableStateOf(false) }
     val uiState by  viewModel.uiState.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(brush = Brush.verticalGradient(colors = listOf(
-                Orange0,
-                Orange1,
-                Orange2
-        )))
             .verticalScroll(rememberScrollState())
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -111,36 +108,20 @@ fun SignUp(viewModel: AuthViewModel = hiltViewModel(),onNavigation:(SignUpNaviga
         Spacer(modifier = Modifier.height(20.dp))
 
         // Sign Up Button
-        Button(
+
+        AuthButton(
             onClick = {
                 // Validate email on submit
                 if (!viewModel.validateEmail(email.value.trim())) {
                     showEmailError = true
-                    return@Button
                 } else {
                     showEmailError = false
                     viewModel.signUp(email=email.value.trim(), password =  password.value.trim(), username =  username.value.trim())
                 }
             },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = username.value.isNotEmpty() && email.value.isNotEmpty() && password.value.isNotEmpty() && uiState !is AuthUiState.Loading,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = ColorPrimary,
-                disabledContainerColor = TextWhite
-            ),
-            shape = RoundedCornerShape(4.dp)
-        ) {
-
-            if (uiState is AuthUiState.Loading) {
-                CircularProgressIndicator(
-                    color = White,
-                    modifier = Modifier.size(16.dp),
-                    strokeWidth = 2.dp
-                )
-            } else {
-                Text(stringResource(R.string.text_sign_up), style = MaterialTheme.typography.SemiBold14, color = White)
-            }
-        }
+            enabled =  username.value.isNotEmpty() && email.value.isNotEmpty() && password.value.isNotEmpty(),
+            uiState = uiState
+        )
 
         Spacer(modifier = Modifier.height(24.dp))
 
@@ -164,13 +145,13 @@ fun SignUp(viewModel: AuthViewModel = hiltViewModel(),onNavigation:(SignUpNaviga
             Text(
                 stringResource(R.string.text_already_have_account),
                 style = MaterialTheme.typography.Normal12,
-                color = Color.White
+                color = Color.Black
             )
             TextButton(onClick = { onNavigation(SignUpNavigationEvent.OnNavigateToLogin) }) {
                 Text(
                     stringResource(R.string.text_login),
                     style = MaterialTheme.typography.SemiBold12,
-                    color = Color.Black
+                    color = Focused
                 )
             }
         }

@@ -36,6 +36,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asComposeRenderEffect
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -43,6 +45,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.nj.social.space.R
+import com.nj.space.core.AuthButton
 import com.nj.space.core.PasswordOutlinedTextField
 import com.nj.space.core.SocialSpaceOutlinedTextField
 import com.nj.space.ui.theme.ColorDivider
@@ -95,19 +98,12 @@ fun Screen(
     onNavigateToSignUp: () -> Unit,
     onLogin: () -> Unit
 ) {
+    val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(brush = Brush.linearGradient(colors = listOf(
-
-                    Orange0,
-                Orange1,
-                Orange2,
-
-
-                ))
-
-            )
             .verticalScroll(rememberScrollState())
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -137,29 +133,15 @@ fun Screen(
         Spacer(modifier = Modifier.height(20.dp))
 
         // Login Button
-        Button(
-            onClick = { onLogin() },
-            modifier = Modifier.fillMaxWidth(),
-            enabled = emailState.value.isNotEmpty() && password.value.isNotEmpty() && uiState !is AuthUiState.Loading,
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Focused,
-                disabledContainerColor =Unfocused
-            ),
-            shape = RoundedCornerShape(4.dp)
-        ) {
-            if (uiState is AuthUiState.Loading) {
-                CircularProgressIndicator(
-                    color = Focused,
-                    modifier = Modifier.size(16.dp),
-                    strokeWidth = 2.dp
-                )
-            } else {
-                Text(text = stringResource(R.string.text_login),
-                    style = MaterialTheme.typography.SemiBold14,
-                    color = TextWhite
-                )
-            }
-        }
+        AuthButton(
+            onClick = {
+                onLogin()
+                focusManager.clearFocus()
+                keyboardController?.hide()
+            },
+            enabled =  emailState.value.isNotEmpty() && password.value.isNotEmpty(),
+            uiState = uiState
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -180,7 +162,7 @@ fun Screen(
                 stringResource(R.string.text_or),
                 modifier = Modifier.padding(horizontal = 16.dp),
                 style = MaterialTheme.typography.SemiBold12,
-                color = Color.Black
+                color = Focused
             )
             Box(
                 modifier = Modifier
@@ -234,7 +216,7 @@ fun Screen(
                 Text(
                     text = stringResource(R.string.text_sign_up),
                     style = MaterialTheme.typography.SemiBold12,
-                    color = Color.Black
+                    color = Focused
                 )
             }
         }
